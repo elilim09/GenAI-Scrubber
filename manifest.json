@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "genai-scrubber",
+  "description": "Scrubs personal data from text and images before upload.",
+  "version": "0.1.0",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "webRequest",
+    "alarms"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "src/background/serviceWorker.ts"
+  },
+  "action": {
+    "default_popup": "popup/Popup.html",
+    "default_icon": {
+      "16": "public/icons/16.png",
+      "32": "public/icons/32.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/content.ts"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "public/icons/16.png",
+    "32": "public/icons/32.png",
+    "48": "public/icons/48.png",
+    "128": "public/icons/128.png"
+  }
+}
