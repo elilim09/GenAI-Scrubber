@@ -1,8 +1,12 @@
 # genai-scrubber
 
-Chrome/Edge extension that scrubs personal data from text and images locally before they are uploaded. Built with Manifest V3, TypeScript, React, and crxjs.
+![build](https://github.com/elilim09/GenAI-Scrubber/actions/workflows/ci.yml/badge.svg)
 
-## Development
+Chrome/Edge extension that scrubs personal data from text and images locally before upload.
+
+![demo](docs/demo.gif) <!-- <<<binary placeholder>>> -->
+
+## Quick start
 
 ```bash
 pnpm install

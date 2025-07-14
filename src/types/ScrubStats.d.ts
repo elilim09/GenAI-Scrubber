@@ -3,5 +3,6 @@ export interface ScrubStats {
   replacedPhones: number;
   replacedAddresses: number;
   replacedStudentIds: number;
-  imagesProcessed?: number;
+  facesBlurred?: number;
+  tokensReplaced?: number;
 }

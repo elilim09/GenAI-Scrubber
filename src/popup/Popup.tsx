@@ -1,27 +1,48 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export function Popup(): JSX.Element {
+export default function Popup(): JSX.Element {
   const [count, setCount] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
+  const [learning, setLearning] = useState(false);
 
   useEffect(() => {
-    chrome.storage.sync.get(['count', 'logs'], (data) => {
-      setCount(data.count || 0);
-      setLogs(data.logs || []);
+    chrome.storage.local.get(['dailyScrubCount', 'scrubLogs'], (data) => {
+      setCount(data.dailyScrubCount || 0);
+      setLogs((data.scrubLogs as string[]) || []);
+    });
+    chrome.storage.sync.get('learningMode', (data) => {
+      setLearning(Boolean(data.learningMode));
     });
   }, []);
 
+  const toggle = (): void => {
+    const next = !learning;
+    setLearning(next);
+    chrome.storage.sync.set({ learningMode: next });
+  };
+
   return (
-    <div className="p-4 w-60">
+    <div className="p-4 w-72 font-sans text-sm">
       <h1 className="text-lg font-bold mb-2">genai-scrubber</h1>
-      <p>Today: {count} scrubs</p>
-      <ul className="text-xs mt-2 list-disc ml-4">
-        {logs.slice(0, 10).map((l, i) => (
-          <li key={i}>{l}</li>
-        ))}
-      </ul>
+      <div className="flex items-center mb-2">
+        <span className="mr-2">Today</span>
+        <span className="bg-blue-500 text-white rounded-full px-2 text-xs">
+          {count}
+        </span>
+      </div>
+      <table className="w-full text-xs mb-3">
+        <tbody>
+          {logs.slice(0, 10).map((l, i) => (
+            <tr key={i} className="border-b border-gray-200">
+              <td className="py-1 px-1 truncate">{l}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <label className="flex items-center space-x-2">
+        <input type="checkbox" checked={learning} onChange={toggle} />
+        <span>Learning mode (warn only)</span>
+      </label>
     </div>
   );
 }
-export default Popup;
