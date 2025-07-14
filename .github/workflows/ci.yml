@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm run build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: extension
+          path: genai-scrubber.zip
