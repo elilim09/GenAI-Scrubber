@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --debug",
     "build": "vite build && cd dist && zip -r ../genai-scrubber.zip .",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.{ts,tsx,json,md}'",
-    "test": "vitest",
+    "test": "vitest run",
     "e2e": "vitest run --config vitest.e2e.config.ts"
   },
   "dependencies": {
@@ -17,8 +17,7 @@
     "react-dom": "^18.2.0",
     "onnxruntime-web": "^1.16.0",
     "tesseract.js": "^4.1.1",
-    "opencv.js": "^1.2.1",
-    "crypto-js": "^4.1.1"
+    "opencv.js": "^1.2.1"
   },
   "devDependencies": {
     "typescript": "^5.2.0",
